@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import argparse
 import subprocess
 from mutagen.id3 import ID3, TPE1, TIT2, TRCK, TALB, APIC
