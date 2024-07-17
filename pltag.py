@@ -24,7 +24,9 @@ class Song:
         })
 
 class SongBuilder:
-    def __init__(self):
+    def __init__(self, returnFunction=None, returnValue=None):
+        self.rf = returnFunction
+        self.rv = returnValue
         self.song = Song()
 
     def title(self, title):
@@ -52,6 +54,10 @@ class SongBuilder:
         return self
 
     def build(self):
+        if self.rf is not None:
+            self.rf(self.song)
+        if self.rv is not None:
+            return self.rv
         return self.song
 
 class Album:
@@ -97,9 +103,8 @@ class AlbumBuilder:
         self.album.art = art
         return self
 
-    def track(self, song):
-        self.album.add_track(song)
-        return self
+    def track(self):
+        return SongBuilder(lambda song: self.album.add_track(song), self)
 
     def build(self):
         return self.album
